@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import 'react-dropdown/style.css';
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
-import styles from './styles/schedule.module.css';
-import Select from 'react-select';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from "react";
+import "react-dropdown/style.css";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
+import styles from "./styles/schedule.module.css";
+import Select from "react-select";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { API_URL } from "../config";
 
 const options = [
-  { value: 'mac@gmail.com', label: 'mac@gmail.com' },
-  { value: 'john@gmail.com', label: 'john@gmail.com' },
-  { value: 'sam@gmail.com', label: 'sam@gmail.com' },
+  { value: "mac@gmail.com", label: "mac@gmail.com" },
+  { value: "john@gmail.com", label: "john@gmail.com" },
+  { value: "sam@gmail.com", label: "sam@gmail.com" },
 ];
 function Schedule() {
   const [candidates, setCandidates] = useState([]);
@@ -21,8 +22,27 @@ function Schedule() {
   const [interviewerEmail, setInterviewerEmail] = useState(null);
 
   useEffect(() => {
-    setCandidates(options);
-    setInterviewers(options);
+    fetch(`${API_URL}/participants/interviewee`, {})
+      .then((res) => res.json())
+      .then((data) => {
+        setCandidates((prev) => [
+          ...prev,
+          { value: data.email, label: data.email },
+        ]);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    fetch(`${API_URL}/participants/interviewer`, {})
+      .then((res) => res.json())
+      .then((data) => {
+        setInterviewers((prev) => [
+          ...prev,
+          { value: data.email, label: data.email },
+        ]);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const handleCandidateEmailChange = (option) => {
@@ -36,18 +56,18 @@ function Schedule() {
 
   const handleSubmit = () => {
     if (candidateEmail == null) {
-      toast.error('Select Candidates for interview');
+      toast.error("Select Candidates for interview");
     } else if (interviewerEmail == null) {
-      toast.error('Select Interviewers for interview');
+      toast.error("Select Interviewers for interview");
     } else if (Date.parse(selectedStartDate) >= Date.parse(selectedEndDate)) {
-      toast.error('Start date-time has to be less that end date-time');
+      toast.error("Start date-time has to be less that end date-time");
     } else {
-      toast.success('Interview Scheduled');
+      toast.success("Interview Scheduled");
     }
-    console.log('Candidate : ', candidateEmail);
-    console.log('interviewer : ', interviewerEmail);
-    console.log('start : ', Date.parse(selectedStartDate));
-    console.log('end : ', Date.parse(selectedEndDate));
+    console.log("Candidate : ", candidateEmail);
+    console.log("interviewer : ", interviewerEmail);
+    console.log("start : ", Date.parse(selectedStartDate));
+    console.log("end : ", Date.parse(selectedEndDate));
   };
 
   return (
@@ -59,9 +79,9 @@ function Schedule() {
             className={styles.list}
             value={candidateEmail}
             onChange={handleCandidateEmailChange}
-            options={options}
+            options={candidates}
             isSearchable={true}
-            placeholder={'Add email'}
+            placeholder={"Add email"}
             isMulti={true}
           />
         </div>
@@ -71,10 +91,10 @@ function Schedule() {
             className={styles.list}
             value={interviewerEmail}
             onChange={handleInterviewerEmailChange}
-            options={options}
+            options={interviewers}
             isSearchable={true}
             isMulti={true}
-            placeholder={'Add email'}
+            placeholder={"Add email"}
           />
         </div>
         <div className={styles.dropdown}>
@@ -94,8 +114,8 @@ function Schedule() {
         </div>
         <div className={styles.scheduleCont}>
           <input
-            type={'file'}
-            name='Upload resume'
+            type={"file"}
+            name="Upload resume"
             // className={styles.schedule}
           />
           <div onClick={handleSubmit} className={styles.schedule}>
@@ -104,7 +124,7 @@ function Schedule() {
         </div>
       </div>
       <ToastContainer
-        position='top-right'
+        position="top-right"
         autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
