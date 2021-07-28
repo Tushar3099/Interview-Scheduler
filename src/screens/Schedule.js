@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "react-dropdown/style.css";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
@@ -9,6 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { API_URL } from "../config";
 
 function Schedule() {
+  const location = useLocation();
+  const interview = location.state;
+  console.log(interview);
   const [candidates, setCandidates] = useState([]);
   const [interviewers, setInterviewers] = useState([]);
   const [selectedStartDate, handleStartDateChange] = useState(new Date());
@@ -16,6 +20,29 @@ function Schedule() {
   const [candidateEmail, setCondidateEmail] = useState([]);
   const [interviewerEmail, setInterviewerEmail] = useState([]);
 
+  useEffect(() => {
+    if (interview) {
+      let newCand = [];
+      let newIntr = [];
+      interview.participants.map((item, _index) => {
+        if (item.role == "interviewer") {
+          newIntr.push({
+            label: item.name,
+            value: item.id,
+          });
+        } else {
+          newCand.push({
+            label: item.name,
+            value: item.id,
+          });
+        }
+      });
+      setCondidateEmail(newCand);
+      setInterviewerEmail(newIntr);
+      handleStartDateChange(interview.startTime);
+      handleEndDateChange(interview.endTime);
+    }
+  }, []);
   useEffect(() => {
     let participants = [];
 
@@ -144,11 +171,6 @@ function Schedule() {
           </MuiPickersUtilsProvider>
         </div>
         <div className={styles.scheduleCont}>
-          <input
-            type={"file"}
-            name="Upload resume"
-            // className={styles.schedule}
-          />
           <div onClick={handleSubmit} className={styles.schedule}>
             Schedule
           </div>

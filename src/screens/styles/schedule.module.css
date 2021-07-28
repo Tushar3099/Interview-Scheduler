@@ -30,6 +30,7 @@
   height: 100%;
   padding: 10px;
   justify-content: flex-start;
+  padding-top: 5%;
 }
 
 .container .heading {
