@@ -118,8 +118,9 @@ function Schedule() {
         .then((res) => res.json())
         .then((data) => {
           // console.log(data.error.message);
-          if (data.error) toast.error(data.error.message);
-          else {
+          if (data.error) {
+            toast.error(data.error.message);
+          } else {
             toast.success("Interview successfully scheduled");
             toast.success("Emails sent to the participants");
           }
