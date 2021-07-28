@@ -15,7 +15,7 @@
     "react-icons": "4.2.0",
     "react-particles-js": "3.5.3",
     "react-router-dom": "5.2.0",
-    "react-scripts": "4.0.0",
+    "react-scripts": "^4.0.3",
     "tsparticles": "1.32.0"
   },
   "devDependencies": {
