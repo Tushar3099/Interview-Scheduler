@@ -107,7 +107,7 @@ function List() {
               />
               <Moment
                 className={styles.formatDate}
-                date={interview.endTime}
+                date={interview.startTime}
                 format='hh:mm:ss'
               />
             </div>
@@ -115,7 +115,7 @@ function List() {
               <h3>End Date-Time</h3>
               <Moment
                 className={styles.formatDate}
-                date={interview.startTime}
+                date={interview.endTime}
                 format='YYYY/MM/DD'
               />
               <Moment
@@ -134,19 +134,15 @@ function List() {
             </div>
           </div>
           <div className={styles.buttons}>
-            <Link
-              to={{
-                pathname: '/schedule-interview',
-                state: interview,
-              }}
-            >
-              <div
-                onClick={() => handleEdit(interview)}
-                className={styles.edit}
-              >
-                Edit
-              </div>
-            </Link>
+            <div onClick={() => handleEdit(interview)} className={styles.edit}>
+              <Link
+                to={{
+                  pathname: '/schedule-interview',
+                  state: interview,
+                }}
+              ></Link>
+              Edit
+            </div>
             <div
               onClick={() => handleDelete(interview)}
               className={styles.delete}
