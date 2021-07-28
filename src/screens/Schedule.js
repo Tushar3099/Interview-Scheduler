@@ -37,14 +37,13 @@ function Schedule() {
   const handleSubmit = () => {
     if (candidateEmail == null) {
       toast.error('Select Candidates for interview');
-    }
-    if (interviewerEmail == null) {
+    } else if (interviewerEmail == null) {
       toast.error('Select Interviewers for interview');
-    }
-    if (Date.parse(selectedStartDate) >= Date.parse(selectedEndDate)) {
+    } else if (Date.parse(selectedStartDate) >= Date.parse(selectedEndDate)) {
       toast.error('Start date-time has to be less that end date-time');
+    } else {
+      toast.success('Interview Scheduled');
     }
-    toast.success('Interview Scheduled');
     console.log('Candidate : ', candidateEmail);
     console.log('interviewer : ', interviewerEmail);
     console.log('start : ', Date.parse(selectedStartDate));
@@ -94,6 +93,11 @@ function Schedule() {
           </MuiPickersUtilsProvider>
         </div>
         <div className={styles.scheduleCont}>
+          <input
+            type={'file'}
+            name='Upload resume'
+            // className={styles.schedule}
+          />
           <div onClick={handleSubmit} className={styles.schedule}>
             Schedule
           </div>

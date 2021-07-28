@@ -48,6 +48,7 @@
 .schedule {
   width: 60%;
   padding: 15px 45px;
+  margin: 20px 0;
   text-align: center;
   text-transform: uppercase;
   transition: 0.5s;
