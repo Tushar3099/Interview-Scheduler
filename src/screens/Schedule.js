@@ -12,7 +12,6 @@ import { API_URL } from "../config";
 function Schedule() {
   const location = useLocation();
   const interview = location.state;
-  console.log(interview);
   const [candidates, setCandidates] = useState([]);
   const [interviewers, setInterviewers] = useState([]);
   const [selectedStartDate, handleStartDateChange] = useState(new Date());
@@ -123,7 +122,6 @@ function Schedule() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.error) {
             toast.error(data.error.message);
           } else {
