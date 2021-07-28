@@ -27,20 +27,20 @@ function Schedule() {
       interview.participants.map((item, _index) => {
         if (item.role == "interviewer") {
           newIntr.push({
-            label: item.name,
-            value: item.id,
+            label: item.email,
+            value: item._id,
           });
         } else {
           newCand.push({
-            label: item.name,
-            value: item.id,
+            label: item.email,
+            value: item._id,
           });
         }
       });
       setCondidateEmail(newCand);
       setInterviewerEmail(newIntr);
-      handleStartDateChange(interview.startTime);
-      handleEndDateChange(interview.endTime);
+      handleStartDateChange(interview.startTimestamp);
+      handleEndDateChange(interview.endTimestamp);
     }
   }, []);
   useEffect(() => {
@@ -106,8 +106,14 @@ function Schedule() {
           ids = [...ids, val.value];
         });
       // console.log(selectedStartDate, " ", selectedEndDate, " ", ids);
-      fetch(`${API_URL}/interviews/schedule`, {
-        method: "POST",
+      let path = interview
+        ? `${API_URL}/interviews/edit/${interview._id}`
+        : `${API_URL}/interviews/schedule`;
+
+      let method = interview ? "PUT" : "POST";
+
+      fetch(path, {
+        method,
         body: JSON.stringify({
           participants: ids,
           startTimestamp: Date.parse(selectedStartDate),
@@ -173,7 +179,7 @@ function Schedule() {
         </div>
         <div className={styles.scheduleCont}>
           <div onClick={handleSubmit} className={styles.schedule}>
-            Schedule
+            {interview ? "Reschedule" : "Schedule"}
           </div>
         </div>
       </div>
