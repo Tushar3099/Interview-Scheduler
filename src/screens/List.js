@@ -1,15 +1,15 @@
-import styles from "./styles/list.module.css";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Moment, { MomentProps } from "react-moment";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { API_URL } from "../config";
+import styles from './styles/list.module.css';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import Moment, { MomentProps } from 'react-moment';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { API_URL } from '../config';
 
 function List() {
   const [interviews, setInterviews] = useState([]);
   const [deleted, setDeleted] = useState(false);
-
+  const history = useHistory();
   useEffect(() => {
     fetch(`${API_URL}/interviews/upcoming`, {})
       .then((res) => res.json())
@@ -25,7 +25,7 @@ function List() {
 
   const handleDelete = (interview) => {
     fetch(`${API_URL}/interviews/delete/${interview._id}`, {
-      method: "DELETE",
+      method: 'DELETE',
     })
       .then((res) => res.json())
       .then((data) => {
@@ -33,6 +33,7 @@ function List() {
         setDeleted((prev) => !prev);
       })
       .catch((err) => console.log(err));
+    history.go(0);
   };
 
   return (
@@ -47,12 +48,12 @@ function List() {
                 <Moment
                   className={styles.formatDate}
                   date={interview.startTimestamp}
-                  format="YYYY/MM/DD"
+                  format='YYYY/MM/DD'
                 />
                 <Moment
                   className={styles.formatDate}
                   date={interview.startTimestamp}
-                  format="hh:mm:ss"
+                  format='hh:mm:ss'
                 />
               </div>
               <div className={styles.dateItem}>
@@ -60,12 +61,12 @@ function List() {
                 <Moment
                   className={styles.formatDate}
                   date={interview.endTimestamp}
-                  format="YYYY/MM/DD"
+                  format='YYYY/MM/DD'
                 />
                 <Moment
                   className={styles.formatDate}
                   date={interview.endTimestamp}
-                  format="hh:mm:ss"
+                  format='hh:mm:ss'
                 />
               </div>
             </div>
@@ -84,7 +85,7 @@ function List() {
               >
                 <Link
                   to={{
-                    pathname: "/schedule-interview",
+                    pathname: '/schedule-interview',
                     state: interview,
                   }}
                 ></Link>
@@ -101,7 +102,7 @@ function List() {
         ))}
       </div>
       <ToastContainer
-        position="top-right"
+        position='top-right'
         autoClose={4000}
         hideProgressBar={false}
         newestOnTop={false}
