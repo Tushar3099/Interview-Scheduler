@@ -8,21 +8,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_URL } from "../config";
 
-const options = [
-  { value: "mac@gmail.com", label: "mac@gmail.com" },
-  { value: "john@gmail.com", label: "john@gmail.com" },
-  { value: "sam@gmail.com", label: "sam@gmail.com" },
-];
 function Schedule() {
   const [candidates, setCandidates] = useState([]);
   const [interviewers, setInterviewers] = useState([]);
   const [selectedStartDate, handleStartDateChange] = useState(new Date());
   const [selectedEndDate, handleEndDateChange] = useState(new Date());
-  const [candidateEmail, setCondidateEmail] = useState(null);
-  const [interviewerEmail, setInterviewerEmail] = useState(null);
+  const [candidateEmail, setCondidateEmail] = useState([]);
+  const [interviewerEmail, setInterviewerEmail] = useState([]);
 
   useEffect(() => {
     let participants = [];
+
     fetch(`${API_URL}/participants/interviewee`, {})
       .then((res) => res.json())
       .then((data) => {
@@ -63,19 +59,46 @@ function Schedule() {
   };
 
   const handleSubmit = () => {
-    if (candidateEmail == null) {
-      toast.error("Select Candidates for interview");
-    } else if (interviewerEmail == null) {
-      toast.error("Select Interviewers for interview");
+    // if (candidateEmail == null) {
+    //   toast.error("Select Candidates for interview");
+    // } else if (interviewerEmail == null) {
+    //   toast.error("Select Interviewers for interview");
+    // }
+    if (Date.parse(selectedStartDate) < Date.now()) {
+      toast.error("Start time should be greater than current time");
     } else if (Date.parse(selectedStartDate) >= Date.parse(selectedEndDate)) {
       toast.error("Start date-time has to be less that end date-time");
     } else {
-      toast.success("Interview Scheduled");
+      let ids = [];
+      if (candidateEmail.length > 0)
+        candidateEmail.map((val) => {
+          ids = [...ids, val.value];
+        });
+      if (interviewerEmail.length > 0)
+        interviewerEmail.map((val) => {
+          ids = [...ids, val.value];
+        });
+      // console.log(selectedStartDate, " ", selectedEndDate, " ", ids);
+      fetch(`${API_URL}/interviews/schedule`, {
+        method: "POST",
+        body: JSON.stringify({
+          participants: ids,
+          startTimestamp: Date.parse(selectedStartDate),
+          endTimestamp: Date.parse(selectedEndDate),
+        }),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data.error.message);
+          if (data.error) toast.error(data.error.message);
+          else {
+            toast.success("Interview successfully scheduled");
+            toast.success("Emails sent to the participants");
+          }
+        })
+        .catch((err) => console.log(err));
     }
-    console.log("Candidate : ", candidateEmail);
-    console.log("interviewer : ", interviewerEmail);
-    console.log("start : ", Date.parse(selectedStartDate));
-    console.log("end : ", Date.parse(selectedEndDate));
   };
 
   return (
@@ -133,7 +156,7 @@ function Schedule() {
       </div>
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={4000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
