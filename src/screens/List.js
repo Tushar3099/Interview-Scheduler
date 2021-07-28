@@ -1,25 +1,25 @@
-import styles from './styles/list.module.css';
-import React, { useState, useEffect } from 'react';
-import Moment, { MomentProps } from 'react-moment';
+import styles from "./styles/list.module.css";
+import React, { useState, useEffect } from "react";
+import Moment, { MomentProps } from "react-moment";
 
 const data = [
   {
     participants: [
       {
-        name: 'tushar',
-        email: 'xyz@gmail.com',
+        name: "tushar",
+        email: "xyz@gmail.com",
       },
       {
-        name: 'vedant',
-        email: 'ved@gmail.com',
+        name: "vedant",
+        email: "ved@gmail.com",
       },
       {
-        name: 'ayush',
-        email: 'ayush@gmail.com',
+        name: "ayush",
+        email: "ayush@gmail.com",
       },
       {
-        name: 'shweta',
-        email: 'ayush@gmail.com',
+        name: "shweta",
+        email: "ayush@gmail.com",
       },
     ],
     startTime: 1627474833133,
@@ -28,34 +28,16 @@ const data = [
   {
     participants: [
       {
-        name: 'tushar',
-        email: 'xyz@gmail.com',
+        name: "tushar",
+        email: "xyz@gmail.com",
       },
       {
-        name: 'vedant',
-        email: 'ved@gmail.com',
+        name: "vedant",
+        email: "ved@gmail.com",
       },
       {
-        name: 'ayush',
-        email: 'ayush@gmail.com',
-      },
-    ],
-    startTime: 1627474833133,
-    endTime: 1627474854089,
-  },
-  {
-    participants: [
-      {
-        name: 'tushar',
-        email: 'xyz@gmail.com',
-      },
-      {
-        name: 'vedant',
-        email: 'ved@gmail.com',
-      },
-      {
-        name: 'ayush',
-        email: 'ayush@gmail.com',
+        name: "ayush",
+        email: "ayush@gmail.com",
       },
     ],
     startTime: 1627474833133,
@@ -64,16 +46,34 @@ const data = [
   {
     participants: [
       {
-        name: 'tushar',
-        email: 'xyz@gmail.com',
+        name: "tushar",
+        email: "xyz@gmail.com",
       },
       {
-        name: 'vedant',
-        email: 'ved@gmail.com',
+        name: "vedant",
+        email: "ved@gmail.com",
       },
       {
-        name: 'ayush',
-        email: 'ayush@gmail.com',
+        name: "ayush",
+        email: "ayush@gmail.com",
+      },
+    ],
+    startTime: 1627474833133,
+    endTime: 1627474854089,
+  },
+  {
+    participants: [
+      {
+        name: "tushar",
+        email: "xyz@gmail.com",
+      },
+      {
+        name: "vedant",
+        email: "ved@gmail.com",
+      },
+      {
+        name: "ayush",
+        email: "ayush@gmail.com",
       },
     ],
     startTime: 1627474833133,
@@ -90,7 +90,7 @@ function List() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.heading}>Scheduled Interviews</div>
+      <div className={styles.heading}>Upcoming Interviews</div>
       {interviews.map((interview, _index) => (
         <div className={styles.card}>
           <div className={styles.dateTime}>
@@ -100,12 +100,12 @@ function List() {
               <Moment
                 className={styles.formatDate}
                 date={interview.startTime}
-                format='YYYY/MM/DD'
+                format="YYYY/MM/DD"
               />
               <Moment
                 className={styles.formatDate}
                 date={interview.endTime}
-                format='hh:mm:ss'
+                format="hh:mm:ss"
               />
             </div>
             <div className={styles.dateItem}>
@@ -114,12 +114,12 @@ function List() {
               <Moment
                 className={styles.formatDate}
                 date={interview.startTime}
-                format='YYYY/MM/DD'
+                format="YYYY/MM/DD"
               />
               <Moment
                 className={styles.formatDate}
                 date={interview.endTime}
-                format='hh:mm:ss'
+                format="hh:mm:ss"
               />
             </div>
           </div>
