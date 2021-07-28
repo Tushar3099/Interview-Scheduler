@@ -1,79 +1,83 @@
-import styles from "./styles/list.module.css";
-import React, { useState, useEffect } from "react";
-import Moment, { MomentProps } from "react-moment";
+import styles from './styles/list.module.css';
+import React, { useState, useEffect } from 'react';
+import Moment, { MomentProps } from 'react-moment';
 
 const data = [
   {
+    id: 8721643816329813,
     participants: [
       {
-        name: "tushar",
-        email: "xyz@gmail.com",
+        name: 'tushar',
+        email: 'xyz@gmail.com',
       },
       {
-        name: "vedant",
-        email: "ved@gmail.com",
+        name: 'vedant',
+        email: 'ved@gmail.com',
       },
       {
-        name: "ayush",
-        email: "ayush@gmail.com",
+        name: 'ayush',
+        email: 'ayush@gmail.com',
       },
       {
-        name: "shweta",
-        email: "ayush@gmail.com",
+        name: 'shweta',
+        email: 'ayush@gmail.com',
       },
     ],
     startTime: 1627474833133,
     endTime: 818035920000,
   },
   {
+    id: 92163917231312,
     participants: [
       {
-        name: "tushar",
-        email: "xyz@gmail.com",
+        name: 'tushar',
+        email: 'xyz@gmail.com',
       },
       {
-        name: "vedant",
-        email: "ved@gmail.com",
+        name: 'vedant',
+        email: 'ved@gmail.com',
       },
       {
-        name: "ayush",
-        email: "ayush@gmail.com",
+        name: 'ayush',
+        email: 'ayush@gmail.com',
       },
     ],
     startTime: 1627474833133,
     endTime: 1627474854089,
   },
   {
+    id: 92163917231312,
     participants: [
       {
-        name: "tushar",
-        email: "xyz@gmail.com",
+        name: 'tushar',
+        email: 'xyz@gmail.com',
       },
       {
-        name: "vedant",
-        email: "ved@gmail.com",
+        name: 'vedant',
+        email: 'ved@gmail.com',
       },
       {
-        name: "ayush",
-        email: "ayush@gmail.com",
+        name: 'ayush',
+        email: 'ayush@gmail.com',
       },
     ],
     startTime: 1627474833133,
     endTime: 1627474854089,
   },
   {
+    id: 92163917231312,
     participants: [
       {
-        name: "tushar",
-        email: "xyz@gmail.com",
+        name: 'tushar',
+        email: 'xyz@gmail.com',
       },
       {
-        name: "vedant",
-        email: "ved@gmail.com",
+        name: 'vedant',
+        email: 'ved@gmail.com',
       },
       {
-        name: "ayush",
-        email: "ayush@gmail.com",
+        name: 'ayush',
+        email: 'ayush@gmail.com',
       },
     ],
     startTime: 1627474833133,
@@ -88,6 +92,10 @@ function List() {
     setInterviews(data);
   }, []);
 
+  const handleDelete = (name) => {
+    console.log(name);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Upcoming Interviews</div>
@@ -96,30 +104,28 @@ function List() {
           <div className={styles.dateTime}>
             <div className={styles.dateItem}>
               <h3>Start Date-Time</h3>
-              {/* {console.log(interview.startTime)} */}
               <Moment
                 className={styles.formatDate}
                 date={interview.startTime}
-                format="YYYY/MM/DD"
+                format='YYYY/MM/DD'
               />
               <Moment
                 className={styles.formatDate}
                 date={interview.endTime}
-                format="hh:mm:ss"
+                format='hh:mm:ss'
               />
             </div>
             <div className={styles.dateItem}>
               <h3>End Date-Time</h3>
-              {console.log(interview.endTime)}
               <Moment
                 className={styles.formatDate}
                 date={interview.startTime}
-                format="YYYY/MM/DD"
+                format='YYYY/MM/DD'
               />
               <Moment
                 className={styles.formatDate}
                 date={interview.endTime}
-                format="hh:mm:ss"
+                format='hh:mm:ss'
               />
             </div>
           </div>
@@ -129,6 +135,15 @@ function List() {
               {interview.participants.map((participant, _index) => (
                 <h3>{participant.name.toUpperCase()}</h3>
               ))}
+            </div>
+          </div>
+          <div className={styles.buttons}>
+            <div className={styles.edit}>Edit</div>
+            <div
+              onClick={() => handleDelete(interview)}
+              className={styles.delete}
+            >
+              Delete
             </div>
           </div>
         </div>
