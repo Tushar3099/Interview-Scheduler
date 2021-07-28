@@ -148,11 +148,6 @@ function Schedule() {
           </MuiPickersUtilsProvider>
         </div>
         <div className={styles.scheduleCont}>
-          <input
-            type={'file'}
-            name='Upload resume'
-            // className={styles.schedule}
-          />
           <div onClick={handleSubmit} className={styles.schedule}>
             Schedule
           </div>
