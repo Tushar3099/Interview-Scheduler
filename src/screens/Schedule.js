@@ -22,25 +22,33 @@ function Schedule() {
   const [interviewerEmail, setInterviewerEmail] = useState(null);
 
   useEffect(() => {
+    let participants = [];
     fetch(`${API_URL}/participants/interviewee`, {})
       .then((res) => res.json())
       .then((data) => {
-        setCandidates((prev) => [
-          ...prev,
-          { value: data.email, label: data._id },
-        ]);
+        data.participants.map((participant) => {
+          participants = [
+            ...participants,
+            { value: participant._id, label: participant.email },
+          ];
+        });
+        setCandidates(participants);
       })
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
+    let participants = [];
     fetch(`${API_URL}/participants/interviewer`, {})
       .then((res) => res.json())
       .then((data) => {
-        setInterviewers((prev) => [
-          ...prev,
-          { value: data.email, label: data._id },
-        ]);
+        data.participants.map((participant) => {
+          participants = [
+            ...participants,
+            { value: participant._id, label: participant.email },
+          ];
+        });
+        setInterviewers(participants);
       })
       .catch((err) => console.log(err));
   }, []);
