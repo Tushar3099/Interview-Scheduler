@@ -94,7 +94,7 @@ function Schedule() {
     if (Date.parse(selectedStartDate) < Date.now()) {
       toast.error("Start time should be greater than current time");
     } else if (Date.parse(selectedStartDate) >= Date.parse(selectedEndDate)) {
-      toast.error("Start date-time has to be less that end date-time");
+      toast.error("Start date-time has to be less than end date-time");
     } else {
       let ids = [];
       if (candidateEmail.length > 0)
@@ -123,7 +123,7 @@ function Schedule() {
       })
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data.error.message);
+          console.log(data);
           if (data.error) {
             toast.error(data.error.message);
           } else {
