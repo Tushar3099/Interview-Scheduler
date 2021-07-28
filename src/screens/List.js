@@ -1,5 +1,6 @@
 import styles from './styles/list.module.css';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Moment, { MomentProps } from 'react-moment';
 
 const data = [
@@ -9,79 +10,65 @@ const data = [
       {
         name: 'tushar',
         email: 'xyz@gmail.com',
+        role: 'interviewee',
       },
       {
         name: 'vedant',
         email: 'ved@gmail.com',
+        role: 'interviewer',
       },
       {
         name: 'ayush',
         email: 'ayush@gmail.com',
-      },
-      {
-        name: 'shweta',
-        email: 'ayush@gmail.com',
+        role: 'interviewee',
       },
     ],
-    startTime: 1627474833133,
-    endTime: 818035920000,
+    startTime: 1627485513009,
+    endTime: 1627485552429,
   },
   {
-    id: 92163917231312,
+    id: 8721643816329813,
     participants: [
       {
         name: 'tushar',
         email: 'xyz@gmail.com',
+        role: 'interviewee',
       },
       {
         name: 'vedant',
         email: 'ved@gmail.com',
+        role: 'interviewer',
       },
       {
         name: 'ayush',
         email: 'ayush@gmail.com',
+        role: 'interviewee',
       },
     ],
-    startTime: 1627474833133,
-    endTime: 1627474854089,
+    startTime: 1627485513009,
+    endTime: 1627485552429,
   },
   {
-    id: 92163917231312,
+    id: 8721643816329813,
     participants: [
       {
         name: 'tushar',
         email: 'xyz@gmail.com',
+        role: 'interviewee',
       },
       {
         name: 'vedant',
         email: 'ved@gmail.com',
+        role: 'interviewer',
       },
       {
         name: 'ayush',
         email: 'ayush@gmail.com',
+        role: 'interviewee',
       },
     ],
-    startTime: 1627474833133,
-    endTime: 1627474854089,
-  },
-  {
-    id: 92163917231312,
-    participants: [
-      {
-        name: 'tushar',
-        email: 'xyz@gmail.com',
-      },
-      {
-        name: 'vedant',
-        email: 'ved@gmail.com',
-      },
-      {
-        name: 'ayush',
-        email: 'ayush@gmail.com',
-      },
-    ],
-    startTime: 1627474833133,
-    endTime: 1627474854089,
+    startTime: 1627485513009,
+    endTime: 1627485552429,
   },
 ];
 
@@ -92,8 +79,17 @@ function List() {
     setInterviews(data);
   }, []);
 
-  const handleDelete = (name) => {
+  const handleEdit = (name) => {
     console.log(name);
+  };
+
+  const handleDelete = (interview) => {
+    <Link
+      to={{
+        pathname: '/schedule-interview',
+        state: interview,
+      }}
+    />;
   };
 
   return (
@@ -138,7 +134,19 @@ function List() {
             </div>
           </div>
           <div className={styles.buttons}>
-            <div className={styles.edit}>Edit</div>
+            <Link
+              to={{
+                pathname: '/schedule-interview',
+                state: interview,
+              }}
+            >
+              <div
+                onClick={() => handleEdit(interview)}
+                className={styles.edit}
+              >
+                Edit
+              </div>
+            </Link>
             <div
               onClick={() => handleDelete(interview)}
               className={styles.delete}
