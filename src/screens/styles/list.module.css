@@ -11,7 +11,37 @@
   color: White;
   font-weight: 600;
   font-size: 1.8em;
+  margin-bottom: 10px;
 }
 
-.container .heading .card {
+.container .card {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 20px;
+  margin: 20px;
+  background-color: rgba(255, 255, 255, 0.801);
+}
+
+.container .card .dateTime {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container .card .participants .listParticipants {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.container .card .participants .listParticipants h3 {
+  width: 30%;
+  font-weight: 500;
+}
+
+.formatDate {
+  padding: 5px;
 }

@@ -27,7 +27,7 @@ function Schedule() {
       .then((data) => {
         setCandidates((prev) => [
           ...prev,
-          { value: data.email, label: data.email },
+          { value: data.email, label: data._id },
         ]);
       })
       .catch((err) => console.log(err));
@@ -39,7 +39,7 @@ function Schedule() {
       .then((data) => {
         setInterviewers((prev) => [
           ...prev,
-          { value: data.email, label: data.email },
+          { value: data.email, label: data._id },
         ]);
       })
       .catch((err) => console.log(err));
