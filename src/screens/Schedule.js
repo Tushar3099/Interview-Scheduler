@@ -1,28 +1,56 @@
-import React, { useState } from 'react';
-import Dropdown from 'react-dropdown';
+import React, { useState, useEffect } from 'react';
 import 'react-dropdown/style.css';
-import {
-  DatePicker,
-  TimePicker,
-  DateTimePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import styles from './styles/schedule.module.css';
 import Select from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
+  { value: 'mac@gmail.com', label: 'mac@gmail.com' },
+  { value: 'john@gmail.com', label: 'john@gmail.com' },
+  { value: 'sam@gmail.com', label: 'sam@gmail.com' },
 ];
 function Schedule() {
-  const [selectedDate, handleDateChange] = useState(new Date());
-  const [selectedEmail, setEmail] = useState(null);
+  const [candidates, setCandidates] = useState([]);
+  const [interviewers, setInterviewers] = useState([]);
+  const [selectedStartDate, handleStartDateChange] = useState(new Date());
+  const [selectedEndDate, handleEndDateChange] = useState(new Date());
+  const [candidateEmail, setCondidateEmail] = useState(null);
+  const [interviewerEmail, setInterviewerEmail] = useState(null);
 
-  const handleEmailChange = (option) => {
-    setEmail(option);
+  useEffect(() => {
+    setCandidates(options);
+    setInterviewers(options);
+  }, []);
+
+  const handleCandidateEmailChange = (option) => {
+    // console.log(options);
+    setCondidateEmail(option);
   };
+  const handleInterviewerEmailChange = (option) => {
+    // console.log(options);
+    setInterviewerEmail(option);
+  };
+
+  const handleSubmit = () => {
+    if (candidateEmail == null) {
+      toast.error('Select Candidates for interview');
+    }
+    if (interviewerEmail == null) {
+      toast.error('Select Interviewers for interview');
+    }
+    if (Date.parse(selectedStartDate) >= Date.parse(selectedEndDate)) {
+      toast.error('Start date-time has to be less that end date-time');
+    }
+    toast.success('Interview Scheduled');
+    console.log('Candidate : ', candidateEmail);
+    console.log('interviewer : ', interviewerEmail);
+    console.log('start : ', Date.parse(selectedStartDate));
+    console.log('end : ', Date.parse(selectedEndDate));
+  };
+
   return (
     <div className={styles.mainContainer}>
       <div className={styles.container}>
@@ -30,8 +58,8 @@ function Schedule() {
           <h1 className={styles.heading}>Interviewees</h1>
           <Select
             className={styles.list}
-            value={selectedEmail}
-            onChange={handleEmailChange}
+            value={candidateEmail}
+            onChange={handleCandidateEmailChange}
             options={options}
             isSearchable={true}
             placeholder={'Add email'}
@@ -42,8 +70,8 @@ function Schedule() {
           <h1 className={styles.heading}>Interviewers</h1>
           <Select
             className={styles.list}
-            value={selectedEmail}
-            onChange={handleEmailChange}
+            value={interviewerEmail}
+            onChange={handleInterviewerEmailChange}
             options={options}
             isSearchable={true}
             isMulti={true}
@@ -54,15 +82,34 @@ function Schedule() {
           {/* <h1 className={styles.heading}>Date & Time</h1> */}
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <h1 className={styles.heading}>Start</h1>
-            <DateTimePicker value={selectedDate} onChange={handleDateChange} />
+            <DateTimePicker
+              value={selectedStartDate}
+              onChange={handleStartDateChange}
+            />
             <h1 className={styles.heading}>End</h1>
-            <DateTimePicker value={selectedDate} onChange={handleDateChange} />
+            <DateTimePicker
+              value={selectedEndDate}
+              onChange={handleEndDateChange}
+            />
           </MuiPickersUtilsProvider>
         </div>
         <div className={styles.scheduleCont}>
-          <div className={styles.schedule}>Schedule</div>
+          <div onClick={handleSubmit} className={styles.schedule}>
+            Schedule
+          </div>
         </div>
       </div>
+      <ToastContainer
+        position='top-right'
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }
